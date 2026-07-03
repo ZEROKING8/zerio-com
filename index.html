@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEROKING APPLE HACK</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <style>
+        * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
+        body {
+            background-color: #030303;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(0, 10, 0, 0.92);
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 35px rgba(0, 255, 0, 0.3), inset 0 0 35px rgba(0, 255, 0, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .hacker-title {
+            text-align: center;
+            color: #00ff00;
+            cursor: pointer;
+            user-select: none;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        label { display: block; margin: 15px 0 5px; font-weight: bold; color: #adff2f;}
+        
+        input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border-radius: 4px; border: 1px solid #00ff00;
+            background: #000; color: #00ff00;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.2);
+            font-size: 16px; text-align: center;
+        }
+
+        button {
+            width: 100%; padding: 14px; background: #000; border: 2px solid #00ff00;
+            color: #00ff00; font-size: 16px; font-weight: bold; border-radius: 4px;
+            cursor: pointer; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            transition: 0.3s; text-transform: uppercase; margin-bottom: 10px;
+        }
+        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 35px #00ff00; }
+        
+        .status-box { padding: 12px; border-radius: 4px; text-align: center; font-weight: bold; margin-top: 10px; display: none; }
+        .success { border: 2px solid #00ff00; background: rgba(0, 40, 0, 0.9); color: #00ff00; }
+        .error { border: 2px solid #ff0000; background: rgba(40, 0, 0, 0.9); color: #ff0000; text-shadow: 0 0 5px #ff0000; }
+        
+        .code-output {
+            background: #000; padding: 12px; border-radius: 4px; border: 1px dashed #00ff00;
+            font-family: monospace; word-break: break-all; margin-top: 10px; text-align: center;
+        }
+
+        /* القناة */
+        .channel-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            background: rgba(0, 255, 0, 0.03);
+        }
+        .channel-section img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #00ff00;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .channel-section .channel-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        .channel-section .channel-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 25px;
+            background: #0088cc;
+            color: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            border: 1px solid #00ff00;
+        }
+        .channel-section .channel-link:hover {
+            background: #00aaff;
+            box-shadow: 0 0 30px rgba(0, 136, 204, 0.5);
+            transform: scale(1.05);
+        }
+        .channel-section .payment-info {
+            margin-top: 15px;
+            padding: 12px;
+            border: 1px dashed #ff6b6b;
+            border-radius: 8px;
+            background: rgba(255, 107, 107, 0.05);
+            color: #fffa65;
+            font-size: 14px;
+        }
+        .channel-section .payment-info span {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        /* المنصات */
+        .platforms-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            background: rgba(0, 255, 0, 0.03);
+        }
+        .platforms-section h3 {
+            text-align: center;
+            color: #00ff00;
+            margin-bottom: 15px;
+        }
+        .platform-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #00ff00;
+            transition: 0.3s;
+            text-decoration: none;
+            color: #00ff00;
+        }
+        .platform-card:hover {
+            border-color: #fffa65;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            transform: scale(1.02);
+        }
+        .platform-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .platform-card .platform-info {
+            flex: 1;
+        }
+        .platform-card .platform-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #00ff00;
+        }
+        .platform-card .platform-desc {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* رسالة البروموكود في الهاك */
+        .promo-required {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ff6b6b;
+            border-radius: 8px;
+            background: rgba(255, 107, 107, 0.1);
+            margin: 20px 0;
+        }
+        .promo-required .big-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+        .promo-required .sub-text {
+            color: #fffa65;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .promo-required .code-highlight {
+            display: inline-block;
+            padding: 10px 30px;
+            background: #000;
+            border: 2px solid #ff6b6b;
+            border-radius: 8px;
+            color: #ff6b6b;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 15px 0;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.2);
+        }
+
+        /* التفاح */
+        .apples-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .apple-card {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+        }
+        .apple-card img {
+            width: 100%;
+            max-width: 70px;
+            height: auto;
+        }
+        .apple-card .apple-label {
+            display: block;
+            color: #aaa;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .apple-card .hack-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff0000;
+            color: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .hack-result {
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #ff6b6b;
+            border-radius: 8px;
+            background: rgba(255, 107, 107, 0.05);
+            margin: 15px 0;
+        }
+        .hack-result .big-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+        .hack-result .sub-text {
+            color: #fffa65;
+            font-size: 18px;
+        }
+
+        .game-status {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #fffa65;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <h1 class="hacker-title" id="secretTrigger">🍎 ZEROKING APPLE HACK v5.0 🍎</h1>
+
+    <!-- ========== صفحة التسجيل ========== -->
+    <div class="container" id="registerPanel">
+        <h2 style="text-align: center; color: #ff6b6b;">🔐 تسجيل الدخول للهاك</h2>
+        
+        <!-- لوجو القناة -->
+        <div class="channel-section">
+            <img src="https://i.ibb.co/8gSmgkdy/5886265487220477150.jpg" alt="ZEROKING Channel">
+            <div class="channel-name">𝐙𝐄𝐑𝐎𝐊𝐈𝐍𝐆</div>
+            <a href="https://t.me/+03jy1libFEYzY2E0" target="_blank" class="channel-link">
+                📱 انضم للقناة على تليجرام
+            </a>
+            
+            <!-- رسالة الدفع -->
+            <div class="payment-info">
+                ⚠️ <span>تنبيه هام:</span><br>
+                الرجاء ارسال اسكرين بالتسجيل بالبروموكود وإيداع مبلغ <span>170 ج</span> 
+                (أو <span>5 دولار</span> خارج مصر) ومراسلة الأدمن
+            </div>
+        </div>
+
+        <!-- المنصات -->
+        <div class="platforms-section">
+            <h3>📍 سجل في إحدى المنصات:</h3>
+            
+            <a href="https://linebet.com/ar" target="_blank" class="platform-card">
+                <img src="https://i.ibb.co/ddmNCMf/linebet-rwer3.webp" alt="Linebet">
+                <div class="platform-info">
+                    <div class="platform-name">🎰 Linebet</div>
+                    <div class="platform-desc"> سجل بي برموكود ZEROKING </div>
+                </div>
+                <span style="color:#00ff00;">➜</span>
+            </a>
+
+            <a href="https://paripulseg.com/ar" target="_blank" class="platform-card">
+                <img src="https://i.ibb.co/DPBVnYts/paripulse-thumbnail.png" alt="Paripulse">
+                <div class="platform-info">
+                    <div class="platform-name">🎲 Paripulse</div>
+                    <div class="platform-desc">سجل بي برموكود ZEROKING</div>
+                </div>
+                <span style="color:#00ff00;">➜</span>
+            </a>
+        </div>
+
+        <!-- حقول التسجيل -->
+        <label>🆔 الايدي (10 أرقام):</label>
+        <input type="text" id="userIDInput" placeholder="أدخل 10 أرقام" maxlength="10">
+
+        <label>🔑 كود التفعيل:</label>
+        <input type="text" id="promoInput" placeholder="أدخل الكود من الأدمن">
+
+        <button id="activateHackBtn">🚀 تفعيل الهاك</button>
+        <div id="registerStatus" class="status-box"></div>
+    </div>
+
+    <!-- ========== لوحة الهاك ========== -->
+    <div class="container" id="hackPanel" style="display: none;">
+        <h2 style="text-align: center; color: #ff6b6b;">🍎 نظام استخراج التفاح السليم 🍎</h2>
+        
+        <div style="text-align: center; color: #fffa65; margin-bottom: 15px;">
+            <span id="hackUserDisplay">مرحباً بك!</span>
+            <br>
+            <span style="font-size:14px;color:#aaa;">✅ الهاك مفعل بنجاح</span>
+        </div>
+
+        <!-- رسالة البروموكود للتسجيل -->
+        <div class="promo-required">
+            <div class="big-text">📢 الرجاء تسجيل بالبروموكود</div>
+            <div class="code-highlight">ZEROKING</div>
+            <div class="sub-text">للحصول على كود التفعيل من الأدمن</div>
+        </div>
+
+        <div class="game-status" id="gameInfo">
+            🎯 المضاعف الحالي: <span style="color:#ff6b6b;font-size:28px;">x1.23</span>
+        </div>
+
+        <div style="text-align:center;color:#aaa;font-size:14px;margin-bottom:10px;">
+            الجولة: <span id="roundDisplay" style="color:#fffa65;font-weight:bold;">1</span> من <span id="totalRounds" style="color:#fffa65;font-weight:bold;">10</span>
+        </div>
+
+        <div class="hack-result">
+            <div class="big-text" id="hackResultText">🍎 جاري تحليل التفاح...</div>
+            <div class="sub-text" id="hackSubText">اضغط على "كشف التفاحة"</div>
+        </div>
+
+        <div class="apples-grid">
+            <div class="apple-card" id="apple0">
+                <img id="img0" src="https://i.ibb.co/KxNJNLsq/apple1.png" alt="تفاحة">
+                <span class="apple-label">تفاحة 1</span>
+                <div class="hack-indicator" id="indicator0">🍎</div>
+            </div>
+            <div class="apple-card" id="apple1">
+                <img id="img1" src="https://i.ibb.co/KxNJNLsq/apple1.png" alt="تفاحة">
+                <span class="apple-label">تفاحة 2</span>
+                <div class="hack-indicator" id="indicator1">🍎</div>
+            </div>
+            <div class="apple-card" id="apple2">
+                <img id="img2" src="https://i.ibb.co/KxNJNLsq/apple1.png" alt="تفاحة">
+                <span class="apple-label">تفاحة 3</span>
+                <div class="hack-indicator" id="indicator2">🍎</div>
+            </div>
+            <div class="apple-card" id="apple3">
+                <img id="img3" src="https://i.ibb.co/KxNJNLsq/apple1.png" alt="تفاحة">
+                <span class="apple-label">تفاحة 4</span>
+                <div class="hack-indicator" id="indicator3">🍎</div>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:15px;">
+            <button id="revealBtn" style="flex:1;border-color:#ff6b6b;color:#ff6b6b;">🍎 كشف التفاحة</button>
+            <button id="nextRoundBtn" style="flex:1;border-color:#fffa65;color:#fffa65;">➡️ التالية</button>
+            <button id="resetHackBtn" style="flex:1;border-color:#ffaa00;color:#ffaa00;">🔄 إعادة</button>
+        </div>
+
+        <div style="margin-top:15px;padding:10px;border:1px solid #00ff00;border-radius:4px;max-height:150px;overflow-y:auto;">
+            <div style="color:#aaa;font-size:12px;text-align:center;">📋 سجل التوقعات:</div>
+            <div id="historyLog" style="font-size:14px;color:#fffa65;text-align:center;"></div>
+        </div>
+    </div>
+
+    <!-- ========== لوحة الأدمن ========== -->
+    <div class="container" id="adminAuthPanel" style="display: none;">
+        <h2 style="text-align: center; color: #ff6b6b;">[ نظام التحقق ]</h2>
+        <label>ENTER SECURITY PIN:</label>
+        <input type="password" id="adminPassword" placeholder="*****">
+        <button id="loginAdminBtn">تأكيد</button>
+    </div>
+
+    <div class="container" id="adminPanel" style="display: none;">
+        <h2 style="text-align: center; color: #ff6b6b;">[ لوحة توليد الأكواد ]</h2>
+        <label>توليد كود تفعيل جديد:</label>
+        <button id="genBtn">توليد كود 🔑</button>
+        <div id="adminOutput" class="code-output" style="display: none;"></div>
+        
+        <div style="margin-top:15px;padding:10px;border:1px dashed #fffa65;border-radius:4px;">
+            <div style="color:#aaa;font-size:12px;text-align:center;">📋 الأكواد المستخدمة:</div>
+            <div id="usedCodesList" style="font-size:14px;color:#fffa65;text-align:center;"></div>
+        </div>
+    </div>
+
+    <script>
+        // تأثير الماتريكس
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const alphabet = "01010101👑🍎🍏💥❌⚡🧬";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array.from({ length: columns }).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff00';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 30);
+
+        // فايربيز
+        const firebaseConfig = {
+            apiKey: "AIzaSyApwQigEIf2kyzaRCE-aw2aN3Kws75y3Xw",
+            authDomain: "zeroking-9ed7f.firebaseapp.com",
+            projectId: "zeroking-9ed7f",
+            storageBucket: "zeroking-9ed7f.firebasestorage.app",
+            messagingSenderId: "664788143675",
+            appId: "1:664788143675:web:0f4e31207dbea5dd93561e",
+            measurementId: "G-821MRV1GDW",
+            databaseURL: "https://zeroking-9ed7f-default-rtdb.firebaseio.com/" 
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const MASTER_ADMIN_PASSWORD = "12345";
+        let generatedCodes = [];
+        let usedCodes = [];
+
+        // فتح الأدمن
+        let clickCount = 0;
+        document.getElementById("secretTrigger").addEventListener("click", function() {
+            clickCount++;
+            if (clickCount === 5) {
+                clickCount = 0;
+                document.getElementById("adminAuthPanel").style.display = "block";
+                document.getElementById("registerPanel").style.display = "none";
+                document.getElementById("hackPanel").style.display = "none";
+            }
+        });
+
+        document.getElementById("loginAdminBtn").addEventListener("click", function() {
+            let pass = document.getElementById("adminPassword").value;
+            if (pass === MASTER_ADMIN_PASSWORD) {
+                document.getElementById("adminAuthPanel").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                loadUsedCodes();
+            } else {
+                alert("ACCESS DENIED: PIN INCORRECT");
+            }
+        });
+
+        // توليد كود جديد
+        document.getElementById("genBtn").addEventListener("click", function() {
+            let randomCode = "ZK" + Math.floor(100000 + Math.random() * 900000);
+            let outputDiv = document.getElementById("adminOutput");
+            outputDiv.style.display = "block";
+            outputDiv.innerHTML = `<strong>كود التفعيل الجديد:</strong> <span style="color:#ff6b6b;font-size:24px;">${randomCode}</span>`;
+            
+            db.ref('codes/' + randomCode).set({
+                code: randomCode,
+                status: "active",
+                generatedAt: Date.now()
+            });
+            
+            generatedCodes.push(randomCode);
+        });
+
+        // تحميل الأكواد المستخدمة
+        function loadUsedCodes() {
+            db.ref('codes').once('value').then((snapshot) => {
+                let codes = snapshot.val();
+                let usedList = [];
+                if (codes) {
+                    Object.keys(codes).forEach(key => {
+                        if (codes[key].status === "used") {
+                            usedList.push(key);
+                        }
+                    });
+                }
+                document.getElementById("usedCodesList").innerHTML = usedList.length > 0 ? usedList.join('<br>') : "لا توجد أكواد مستخدمة";
+            });
+        }
+
+        // ==============================================
+        // نظام الهاك
+        // ==============================================
+
+        const multipliers = ["x1.23", "x1.54", "x1.93", "x2.41", "x4.02", "x6.71", "x11.18", "x27.92", "x69.93", "x349.68"];
+        let currentRoundIndex = 0;
+        let luckyAppleIndex = 0;
+        let isHackActive = false;
+        let hackHistory = [];
+
+        const normalAppleImg = "https://i.ibb.co/KxNJNLsq/apple1.png";
+        const goodAppleImg = "https://i.ibb.co/j965hHqS/appleof.png";
+        const badAppleImg = "https://i.ibb.co/ghdZvGg/poii.png";
+
+        function updateRoundCounter() {
+            document.getElementById("roundDisplay").textContent = currentRoundIndex + 1;
+            document.getElementById("totalRounds").textContent = multipliers.length;
+        }
+
+        function updateMultiplierDisplay() {
+            const multiplierText = multipliers[currentRoundIndex] || "x1.23";
+            document.getElementById("gameInfo").innerHTML = `🎯 المضاعف الحالي: <span style="color:#ff6b6b;font-size:28px;">${multiplierText}</span>`;
+        }
+
+        function hideAllIndicators() {
+            for (let i = 0; i < 4; i++) {
+                document.getElementById(`indicator${i}`).style.display = 'none';
+                document.getElementById(`img${i}`).src = normalAppleImg;
+            }
+        }
+
+        function revealApple() {
+            if (!isHackActive) {
+                alert("❌ الهاك غير مفعل! أدخل كود التفعيل الصحيح.");
+                return;
+            }
+
+            if (currentRoundIndex >= multipliers.length) {
+                document.getElementById("hackResultText").innerHTML = "🎉 تم اختراق جميع التوقعات!";
+                document.getElementById("hackSubText").innerHTML = "🏆 أنت بطل الهاكرز!";
+                return;
+            }
+
+            luckyAppleIndex = Math.floor(Math.random() * 4);
+            
+            for (let i = 0; i < 4; i++) {
+                if (i === luckyAppleIndex) {
+                    document.getElementById(`img${i}`).src = goodAppleImg;
+                    document.getElementById(`indicator${i}`).style.display = 'flex';
+                } else {
+                    document.getElementById(`img${i}`).src = badAppleImg;
+                    document.getElementById(`indicator${i}`).style.display = 'none';
+                }
+            }
+
+            document.getElementById("hackResultText").innerHTML = `🍎 التفاحة السليمة في المكان رقم ${luckyAppleIndex + 1}`;
+            document.getElementById("hackSubText").innerHTML = `المضاعف: ${multipliers[currentRoundIndex]}`;
+
+            hackHistory.push(`الجولة ${currentRoundIndex + 1}: ${multipliers[currentRoundIndex]} → تفاحة ${luckyAppleIndex + 1}`);
+            document.getElementById("historyLog").innerHTML = hackHistory.join('<br>');
+
+            updateMultiplierDisplay();
+        }
+
+        function nextRound() {
+            if (!isHackActive) {
+                alert("❌ الهاك غير مفعل!");
+                return;
+            }
+
+            if (currentRoundIndex >= multipliers.length) {
+                document.getElementById("hackResultText").innerHTML = "🎉 تم الانتهاء من جميع التوقعات!";
+                return;
+            }
+
+            currentRoundIndex++;
+            if (currentRoundIndex < multipliers.length) {
+                hideAllIndicators();
+                document.getElementById("hackResultText").innerHTML = `⏳ جاهز للجولة ${currentRoundIndex + 1}`;
+                document.getElementById("hackSubText").innerHTML = `المضاعف القادم: ${multipliers[currentRoundIndex]}`;
+                updateMultiplierDisplay();
+                updateRoundCounter();
+            } else {
+                document.getElementById("hackResultText").innerHTML = "🎉 تم اختراق جميع التوقعات!";
+                document.getElementById("hackSubText").innerHTML = "🏆 أنت بطل الهاكرز!";
+            }
+        }
+
+        function resetHack() {
+            currentRoundIndex = 0;
+            isHackActive = true;
+            hackHistory = [];
+            document.getElementById("historyLog").innerHTML = "";
+            hideAllIndicators();
+            document.getElementById("hackResultText").innerHTML = "🔄 تم إعادة تشغيل الهاك";
+            document.getElementById("hackSubText").innerHTML = "اضغط على 'كشف التفاحة'";
+            updateMultiplierDisplay();
+            updateRoundCounter();
+        }
+
+        // ==============================================
+        // تفعيل الهاك بالكود
+        // ==============================================
+
+        document.getElementById("activateHackBtn").addEventListener("click", function() {
+            let userID = document.getElementById("userIDInput").value.trim();
+            let promo = document.getElementById("promoInput").value.trim();
+            let status = document.getElementById("registerStatus");
+
+            // التحقق من 10 أرقام
+            let idRegex = /^\d{10}$/;
+            if (!idRegex.test(userID)) {
+                status.className = "status-box error";
+                status.style.display = "block";
+                status.innerText = "❌ الايدي يجب أن يكون 10 أرقام بالضبط!";
+                return;
+            }
+
+            if (!promo) {
+                status.className = "status-box error";
+                status.style.display = "block";
+                status.innerText = "❌ من فضلك أدخل كود التفعيل";
+                return;
+            }
+
+            // التحقق من الكود في فايربيز
+            db.ref('codes/' + promo).once('value').then((snapshot) => {
+                if (snapshot.exists()) {
+                    let codeData = snapshot.val();
+                    if (codeData.status === "used") {
+                        status.className = "status-box error";
+                        status.style.display = "block";
+                        status.innerText = "❌ هذا الكود مستخدم بالفعل!";
+                        return;
+                    }
+                    
+                    // تفعيل الكود
+                    status.className = "status-box success";
+                    status.style.display = "block";
+                    status.innerText = "✅ تم تفعيل الهاك بنجاح! مرحباً " + userID;
+
+                    // تحديث حالة الكود
+                    db.ref('codes/' + promo).update({ 
+                        status: "used",
+                        usedBy: userID,
+                        usedAt: Date.now()
+                    });
+
+                    document.getElementById("hackUserDisplay").innerHTML = `👤 مرحباً ${userID}`;
+
+                    setTimeout(() => {
+                        document.getElementById("registerPanel").style.display = "none";
+                        document.getElementById("hackPanel").style.display = "block";
+                        isHackActive = true;
+                        resetHack();
+                        loadUsedCodes();
+                    }, 1000);
+                } else {
+                    status.className = "status-box error";
+                    status.style.display = "block";
+                    status.innerText = "❌ كود التفعيل غير صحيح!";
+                }
+            });
+        });
+
+        // ربط الأزرار
+        document.getElementById("revealBtn").addEventListener("click", revealApple);
+        document.getElementById("nextRoundBtn").addEventListener("click", nextRound);
+        document.getElementById("resetHackBtn").addEventListener("click", resetHack);
+
+        updateRoundCounter();
+        updateMultiplierDisplay();
+    </script>
+</body> 
+</html>

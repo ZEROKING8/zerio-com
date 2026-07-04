@@ -11,7 +11,7 @@
     <style>
         * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
         body {
-            background-color: #030303;
+            background-color: #020202;
             color: #00ff00;
             margin: 0;
             padding: 20px;
@@ -34,13 +34,20 @@
         .container {
             width: 100%;
             max-width: 600px;
-            background: rgba(0, 10, 0, 0.92);
+            background: rgba(0, 7, 0, 0.94);
             border: 2px solid #00ff00;
             box-shadow: 0 0 35px rgba(0, 255, 0, 0.3), inset 0 0 35px rgba(0, 255, 0, 0.05);
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 20px;
             text-shadow: 0 0 5px #00ff00;
+            backdrop-filter: blur(5px);
+            animation: containerGlow 4s infinite alternate;
+        }
+
+        @keyframes containerGlow {
+            0% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.2); border-color: #00ff00; }
+            100% { box-shadow: 0 0 45px rgba(0, 255, 0, 0.5); border-color: #adff2f; }
         }
 
         .hacker-title {
@@ -52,59 +59,74 @@
             font-weight: bold;
             letter-spacing: 2px;
             margin-bottom: 25px;
-            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+            animation: textPulse 2s infinite alternate;
+        }
+
+        @keyframes textPulse {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 0, 0.5); transform: scale(1); }
+            100% { text-shadow: 0 0 25px rgba(0, 255, 0, 0.9); transform: scale(1.02); }
         }
 
         label { display: block; margin: 15px 0 5px; font-weight: bold; color: #adff2f;}
         
         input {
             width: 100%; padding: 12px; margin-bottom: 15px;
-            border-radius: 4px; border: 1px solid #00ff00;
+            border-radius: 6px; border: 1px solid #00ff00;
             background: #000; color: #00ff00;
-            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.2);
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
             font-size: 16px; text-align: center;
+            transition: 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #fffa65;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.3);
         }
 
         button {
             width: 100%; padding: 14px; background: #000; border: 2px solid #00ff00;
-            color: #00ff00; font-size: 16px; font-weight: bold; border-radius: 4px;
+            color: #00ff00; font-size: 16px; font-weight: bold; border-radius: 6px;
             cursor: pointer; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-            transition: 0.3s; text-transform: uppercase; margin-bottom: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            text-transform: uppercase; margin-bottom: 10px;
         }
-        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 35px #00ff00; }
+        button:hover { 
+            background: #00ff00; 
+            color: #000; 
+            box-shadow: 0 0 35px #00ff00; 
+            transform: translateY(-3px);
+        }
+        button:active {
+            transform: translateY(-1px);
+        }
         
-        .status-box { padding: 15px; border-radius: 4px; text-align: center; font-weight: bold; margin-top: 10px; display: none; line-height: 1.6; }
-        .success { border: 2px solid #00ff00; background: rgba(0, 40, 0, 0.9); color: #00ff00; }
-        .error { border: 2px solid #ff0000; background: rgba(40, 0, 0, 0.9); color: #ff0000; text-shadow: 0 0 5px #ff0000; }
+        .status-box { padding: 15px; border-radius: 6px; text-align: center; font-weight: bold; margin-top: 10px; display: none; line-height: 1.6; }
+        .success { border: 2px solid #00ff00; background: rgba(0, 30, 0, 0.95); color: #00ff00; }
+        .error { border: 2px solid #ff0000; background: rgba(30, 0, 0, 0.95); color: #ff0000; text-shadow: 0 0 5px #ff0000; }
         
-        /* تأثيرات التحميل والهكر */
         .loading-spinner {
             display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 4px solid rgba(0,255,0,0.3);
+            width: 35px;
+            height: 35px;
+            border: 4px solid rgba(0,255,0,0.2);
             border-radius: 50%;
             border-top-color: #00ff00;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 0.8s linear infinite;
             margin-bottom: 10px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .hacker-success-badge {
             font-size: 40px;
-            animation: popCheck 0.5s ease-out forwards;
+            animation: popCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             display: block;
             margin: 10px 0;
         }
         @keyframes popCheck {
             0% { transform: scale(0); }
-            80% { transform: scale(1.2); }
+            80% { transform: scale(1.3); }
             100% { transform: scale(1); }
-        }
-
-        .code-output {
-            background: #000; padding: 12px; border-radius: 4px; border: 1px dashed #00ff00;
-            font-family: monospace; word-break: break-all; margin-top: 10px; text-align: center;
         }
 
         .channel-section {
@@ -113,22 +135,38 @@
             padding: 15px;
             border: 2px solid #00ff00;
             border-radius: 12px;
-            background: rgba(0, 255, 0, 0.03);
+            background: rgba(0, 255, 0, 0.02);
         }
+        
         .channel-section img {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             border: 3px solid #00ff00;
             object-fit: cover;
             margin-bottom: 10px;
+            animation: logoFloat 4s ease-in-out infinite, logoGlowBreathing 4s ease-in-out infinite;
         }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes logoGlowBreathing {
+            0% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); border-color: #00ff00; }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.8); border-color: #fffa65; }
+            100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); border-color: #00ff00; }
+        }
+
         .channel-section .channel-name {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             color: #00ff00;
-            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
         }
+        
         .channel-section .channel-link {
             display: inline-block;
             margin-top: 10px;
@@ -138,12 +176,12 @@
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             border: 1px solid #00ff00;
         }
         .channel-section .channel-link:hover {
             background: #00aaff;
-            box-shadow: 0 0 30px rgba(0, 136, 204, 0.5);
+            box-shadow: 0 0 30px rgba(0, 136, 204, 0.6);
             transform: scale(1.05);
         }
         .channel-section .payment-info {
@@ -151,7 +189,7 @@
             padding: 12px;
             border: 1px dashed #ff6b6b;
             border-radius: 8px;
-            background: rgba(255, 107, 107, 0.05);
+            background: rgba(255, 107, 107, 0.03);
             color: #fffa65;
             font-size: 14px;
         }
@@ -162,26 +200,26 @@
             padding: 15px;
             border: 1px solid #00ff00;
             border-radius: 8px;
-            background: rgba(0, 255, 0, 0.03);
+            background: rgba(0, 255, 0, 0.02);
         }
         .platforms-section h3 { text-align: center; color: #00ff00; margin-bottom: 15px; }
         .platform-card {
             display: flex;
             align-items: center;
             gap: 15px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 12px;
             border: 1px solid #00ff00;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             text-decoration: none;
             color: #00ff00;
         }
         .platform-card:hover {
             border-color: #fffa65;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+            transform: translateX(-5px);
         }
         .platform-card img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
         .platform-card .platform-info { flex: 1; }
@@ -193,8 +231,13 @@
             padding: 20px;
             border: 2px solid #ff6b6b;
             border-radius: 8px;
-            background: rgba(255, 107, 107, 0.1);
+            background: rgba(255, 107, 107, 0.08);
             margin: 20px 0;
+            animation: borderPulse 2s infinite alternate;
+        }
+        @keyframes borderPulse {
+            0% { border-color: #ff6b6b; box-shadow: 0 0 10px rgba(255,107,107,0.2); }
+            100% { border-color: #ff0000; box-shadow: 0 0 25px rgba(255,0,0,0.5); }
         }
         .promo-required .big-text { font-size: 28px; font-weight: bold; color: #ff6b6b; text-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
         .promo-required .sub-text { color: #fffa65; font-size: 20px; margin-top: 10px; }
@@ -209,7 +252,7 @@
             font-weight: bold;
             letter-spacing: 3px;
             margin: 15px 0;
-            box-shadow: 0 0 30px rgba(255, 107, 107, 0.2);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
         }
 
         .apples-grid {
@@ -219,13 +262,18 @@
             margin: 20px 0;
         }
         .apple-card {
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             border: 1px solid #00ff00;
             border-radius: 6px;
             padding: 8px;
             text-align: center;
             position: relative;
             box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+            transition: 0.3s;
+        }
+        .apple-card:hover {
+            transform: scale(1.05);
+            border-color: #fffa65;
         }
         .apple-card img { width: 100%; max-width: 60px; height: auto; }
         .apple-card .apple-label { display: block; color: #aaa; font-size: 11px; margin-top: 5px; }
@@ -233,8 +281,6 @@
             position: absolute;
             top: -5px;
             right: -5px;
-            background: #ff0000;
-            color: #fff;
             border-radius: 50%;
             width: 25px;
             height: 25px;
@@ -244,11 +290,10 @@
             font-size: 14px;
             font-weight: bold;
             animation: pulse 1s infinite;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.25); }
             100% { transform: scale(1); }
         }
 
@@ -257,13 +302,17 @@
             padding: 15px;
             border: 2px solid #ff6b6b;
             border-radius: 8px;
-            background: rgba(255, 107, 107, 0.05);
+            background: rgba(255, 107, 107, 0.03);
             margin: 15px 0;
         }
         .hack-result .big-text { font-size: 26px; font-weight: bold; color: #ff6b6b; text-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
         .hack-result .sub-text { color: #fffa65; font-size: 18px; }
 
         .game-status { font-size: 22px; text-align: center; margin-bottom: 15px; color: #fffa65; font-weight: bold; }
+        .code-output {
+            background: #000; padding: 12px; border-radius: 4px; border: 1px dashed #00ff00;
+            font-family: monospace; word-break: break-all; margin-top: 10px; text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -272,7 +321,6 @@
 
     <h1 class="hacker-title" id="secretTrigger">🍎 ZEROKING APPLE HACK v5.5 🍎</h1>
 
-    <!-- ========== صفحة التسجيل ========== -->
     <div class="container" id="registerPanel">
         <h2 style="text-align: center; color: #ff6b6b;">🔐 تسجيل الدخول للهاك</h2>
         
@@ -315,7 +363,6 @@
         <div id="registerStatus" class="status-box"></div>
     </div>
 
-    <!-- ========== لوحة الهاك ========== -->
     <div class="container" id="hackPanel" style="display: none;">
         <h2 style="text-align: center; color: #ff6b6b;">🍎 نظام استخراج التفاح السليم 🍎</h2>
         
@@ -383,7 +430,6 @@
         </div>
     </div>
 
-    <!-- ========== لوحة الأدمن ========== -->
     <div class="container" id="adminAuthPanel" style="display: none;">
         <h2 style="text-align: center; color: #ff6b6b;">[ نظام التحقق ]</h2>
         <label>ENTER SECURITY PIN:</label>
@@ -414,20 +460,25 @@
         const rainDrops = Array.from({ length: columns }).fill(1);
 
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#00ff00';
             ctx.font = fontSize + 'px monospace';
             for (let i = 0; i < rainDrops.length; i++) {
                 const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
                 ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.98) {
                     rainDrops[i] = 0;
                 }
                 rainDrops[i]++;
             }
         }
-        setInterval(drawMatrix, 30);
+        setInterval(drawMatrix, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
 
         // إعدادات فايربيز
         const firebaseConfig = {
@@ -446,7 +497,6 @@
 
         const MASTER_ADMIN_PASSWORD = "12345";
         let generatedCodes = [];
-        let usedCodes = [];
 
         let clickCount = 0;
         document.getElementById("secretTrigger").addEventListener("click", function() {
@@ -491,7 +541,7 @@
         }
 
         // ==============================================================
-        // منطق الهاك وتوزيع التوقعات
+        // مصفوفة التوقعات الصحيحة والمعدلة الجديدة بالكامل
         // ==============================================================
         const multipliers = ["x1.23", "x1.54", "x1.93", "x2.41", "x4.02", "x6.71", "x11.18", "x27.92", "x69.93", "x349.68"];
         let currentRoundIndex = 0;
@@ -499,16 +549,16 @@
         let hackHistory = [];
 
         const applePredictions = [
-            [1, 0, 1, 1, 1], // دور 1 (x1.23) -> التانية بايظة
-            [1, 1, 1, 0, 1], // دور 2 (x1.54) -> الرابعة بايظة
-            [1, 1, 1, 1, 0], // دور 3 (x1.93) -> الخامسة بايظة
-            [0, 1, 1, 1, 1], // دور 4 (x2.41) -> الأولى بايظة
-            [0, 1, 1, 1, 1], // دور 5 (x4.02) -> الأولى بايظة
-            [0, 1, 1, 1, 1], // دور 6 (x6.71) -> الأولى بايظة
-            [0, 1, 1, 1, 1], // دور 7 (x11.18) -> الأولى بايظة في الصف 11
-            [1, 0, 1, 1, 1], // دور 8 (x27.92) -> الثانية بايظة
-            [1, 0, 0, 0, 1], // دور 9 (x69.93) -> التلاتة اللي في النص بايظين
-            [0, 1, 0, 0, 0]  // دور 10 (x349.68) -> كلها بايظة ما عدا التانية سليمة
+            [0, 0, 1, 0, 0], // دور 1 -> التانية بايظة
+            [0, 0, 1, 0, 0], // دور 2 -> الرابعة بايظة
+            [0, 0, 0, 1, 0], // دور 3 -> الخامسة بايظة
+            [0, 0, 0, 1, 0], // دور 4 -> الأولى بايظة
+            [0, 0, 0, 1, 0], // دور 5 -> الأولى بايظة
+            [0, 0, 0, 1, 0], // دور 6 -> الأولى بايظة
+            [0, 0, 0, 1, 0], // دور 7 -> الأولى بايظة
+            [0, 0, 0, 0, 1], // دور 8 -> الثانية بايظة
+            [0, 0, 0, 0, 1], // دور 9 -> التلاتة اللي في النص بايظين
+            [0, 0, 0, 1, 0]  // دور 10 -> كلها بايظة ما عدا التانية سليمة
         ];
 
         const normalAppleImg = "https://i.ibb.co/KxNJNLsq/apple1.png";
@@ -551,24 +601,30 @@
                 if (rowPrediction[i] === 1) {
                     document.getElementById(`img${i}`).src = goodAppleImg;
                     document.getElementById(`indicator${i}`).style.display = 'flex';
-                    document.getElementById(`indicator${i}`).style.background = '#00ff00'; 
+                    document.getElementById(`indicator${i}`).style.background = 'rgba(0, 255, 0, 0.85)'; 
+                    document.getElementById(`indicator${i}`).style.boxShadow = '0 0 15px #00ff00';
                     document.getElementById(`indicator${i}`).innerHTML = '🍏';
                     safeLanes.push(i + 1);
                 } else {
                     document.getElementById(`img${i}`).src = badAppleImg;
                     document.getElementById(`indicator${i}`).style.display = 'flex';
-                    document.getElementById(`indicator${i}`).style.background = '#ff0000'; 
+                    document.getElementById(`indicator${i}`).style.background = 'rgba(255, 0, 0, 0.85)'; 
+                    document.getElementById(`indicator${i}`).style.boxShadow = '0 0 15px #ff0000';
                     document.getElementById(`indicator${i}`).innerHTML = '💥';
                 }
             }
 
-            document.getElementById("hackResultText").innerHTML = `🔮 الخانات الآمنة: ${safeLanes.join(' و ')}`;
-            document.getElementById("hackSubText").innerHTML = `المضاعف الحالي: ${multipliers[currentRoundIndex]} (تجنب الـ 💥)`;
-
-            hackHistory.push(`الجولة ${currentRoundIndex + 1}: ${multipliers[currentRoundIndex]} -> الآمنة [${safeLanes.join(', ')}]`);
+            if (safeLanes.length > 0) {
+                document.getElementById("hackResultText").innerHTML = `🔮 الخانات الآمنة: ${safeLanes.join(' و ')}`;
+                document.getElementById("hackSubText").innerHTML = `المضاعف الحالي: ${multipliers[currentRoundIndex]} (تجنب الـ 💥)`;
+                hackHistory.push(`جولة ${currentRoundIndex + 1} (${multipliers[currentRoundIndex]}) -> آمن [${safeLanes.join(', ')}]`);
+            } else {
+                document.getElementById("hackResultText").innerHTML = `⚠️ لا توجد خانات آمنة مطلقة!`;
+                document.getElementById("hackSubText").innerHTML = `المضاعف الحالي: ${multipliers[currentRoundIndex]} (احذر المخاطرة)`;
+                hackHistory.push(`جولة ${currentRoundIndex + 1} (${multipliers[currentRoundIndex]}) -> لا يوجد أمان`);
+            }
+            
             document.getElementById("historyLog").innerHTML = hackHistory.join('<br>');
-
-            updateMultiplierDisplay();
         }
 
         function nextRound() {
@@ -597,7 +653,7 @@
         }
 
         // ==============================================================
-        // دالة تفعيل الهاك مع التحميل وتأثير الربط بالسيرفر الاحترافي
+        // دالة التفعيل والاتصال المطور بالسيرفر
         // ==============================================================
         document.getElementById("activateHackBtn").addEventListener("click", function() {
             let userID = document.getElementById("userIDInput").value.trim();
@@ -622,11 +678,9 @@
                         status.innerText = "❌ هذا الكود مستخدم بالفعل!"; return;
                     }
                     
-                    // تحديث الكود في الـ Database
                     db.ref('codes/' + promo).update({ status: "used", usedBy: userID, usedAt: Date.now() });
                     document.getElementById("hackUserDisplay").innerHTML = `👤 مرحباً ${userID}`;
                     
-                    // ⏳ تشغيل شاشة التحميل والربط بالسيرفر
                     status.className = "status-box success"; 
                     status.style.display = "block";
                     
@@ -642,13 +696,12 @@
                         timeLeft--;
                         
                         if (timeLeft < 0) {
-                            clearInterval(serverConnectionInterval); // إيقاف عداد الـ 10 ثواني
+                            clearInterval(serverConnectionInterval);
                             
-                            // 💀 التأثير الهكري وعلامة الصح عند الاكتمال
                             status.innerHTML = `
                                 <span class="hacker-success-badge">🟢</span>
-                                <span style="color:#00ff00; font-size: 18px; font-weight: bold;">[ CONNECTION ESTABLISHED ]</span><br>
-                                ✅ تم الربط بنجاح! جاري تحويلك للوحة التحكم الهكرية...
+                                <span style="color:#00ff00; font-size: 18px; font-weight: bold; text-shadow: 0 0 15px #00ff00;">[ CONNECTION ESTABLISHED ]</span><br>
+                                ✅ تم الربط بنجاح! جاري فتح نظام الاختراق المطور...
                             `;
                             
                             setTimeout(() => {
@@ -657,7 +710,7 @@
                                 isHackActive = true;
                                 resetHack();
                                 loadUsedCodes();
-                            }, 1500); // إظهار علامة الصح لمدة ثانية ونصف قبل الدخول
+                            }, 1600);
                         }
                     }, 1000);
 
